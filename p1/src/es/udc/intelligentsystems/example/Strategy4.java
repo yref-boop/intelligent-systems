@@ -6,11 +6,24 @@ import java.util.ArrayList;
 
 public class Strategy4 implements SearchStrategy {
 
-    public Strategy4() {
+    public Strategy4() {}
+        
+    public ArrayList<Node> reconstruct_sol (Node currentNode, int i){
+            
+        ArrayList<Node> sol = new ArrayList<Node>();
+        Node aux_node = currentNode;
+
+        while (aux_node!=null){
+            sol.add(aux_node);
+            aux_node = aux_node.getParentNode();
+        }
+        return Collections.reverse(sol);
     }
+    
 
     @Override
     public State solve(SearchProblem p) throws Exception{
+        
         ArrayList<Node> explored = new ArrayList<Node>();
         State currentState = p.getInitialState();
         Node currentNode = new  Node(null, null, currentState);
@@ -46,6 +59,9 @@ public class Strategy4 implements SearchStrategy {
             if (!modified) throw new Exception("No solution could be found");
         }
         System.out.println((i++) + " - END - " + currentNode.getState());
+
+        reconstruct_sol(currentNode, i);
+
         return currentNode.getState();
     }
 }

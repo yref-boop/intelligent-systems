@@ -24,7 +24,7 @@ public class Strategy4 implements SearchStrategy {
             Action[] availableActions = p.actions(currentState);
             boolean modified = false;
             for (Action acc: availableActions) {
-                State sc = p.result(currentState, acc);
+                State sc = p.result(currentState, acc); 
                 System.out.println((i++) + " - RESULT(" + currentState + ","+ acc + ")=" + sc);
                 if (!explored.contains(sc)) {
                     currentState = sc;

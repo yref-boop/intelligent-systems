@@ -26,9 +26,9 @@ public class Strategy4 implements SearchStrategy {
             boolean modified = false;
             
             for (Action acc: availableActions) {
-                State sc = p.result(currentNode.state, acc); 
+                State sc = p.result(currentNode.getState(), acc); 
                 Node nextNode = new Node(currentNode, acc, sc);
-                System.out.println((i++) + " - RESULT(" + currentNode.state + ","+ acc + ")=" + sc);
+                System.out.println((i++) + " - RESULT(" + currentNode.getState() + ","+ acc + ")=" + sc);
                 
                 if (!(explored.stream().anyMatch(n -> n.state.equals(sc)))) {
                     nextNode.setAction(acc);
@@ -37,7 +37,7 @@ public class Strategy4 implements SearchStrategy {
                     System.out.println((i++) + " - " + sc + " NOT explored");
                     explored.add(currentNode);
                     modified = true;
-                    System.out.println((i++) + " - Current state changed to " + currentState);
+                    System.out.println((i++) + " - Current state changed to " + currentNode.getState());
                     break;
                 }
                 else
@@ -45,7 +45,7 @@ public class Strategy4 implements SearchStrategy {
             }
             if (!modified) throw new Exception("No solution could be found");
         }
-        System.out.println((i++) + " - END - " + currentState);
-        return currentState;
+        System.out.println((i++) + " - END - " + currentNode.getState());
+        return currentNode.getState();
     }
 }

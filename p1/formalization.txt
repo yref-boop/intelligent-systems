@@ -1,0 +1,31 @@
+PROBLEM: a NxN magic square is a matrix that containss the numbers between 1 and NxN 
+arranged so that the sum of the elements of each row, or colum or diagonals, is always:
+\frac{N(NxN+1)}{2}
+
+Formalize the problem so that it can be solved using search strategies
+Use simple actions that only change a single cell of the square
+
+INITIAL STATE:
+    {aa,ba,ca,da,....,na}
+    {. .                }
+    {.     .            }
+    {.        .         }
+    {.            .     }
+    {a.............., nn}
+    
+    a matrix of integers, initialized to 0 except the given data
+
+SET OF ACTIONS:
+    Add number (x) to position (y,z)   
+TRANSITION MODEL:
+    
+GOAL TEST:
+    sum of columns & sum of rows & sum of diagonal == wanted number
+
+
+POSSIBLE FUTURE HEURISTICS:
+    symmetric matrix
+    no repeated values
+    go in order
+    first highest then lowest???
+

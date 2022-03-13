@@ -19,7 +19,7 @@ public class GraphSearchStrategy implements SearchStrategy {
 
     public GraphSearchStrategy() {}
         
-/*    public ArrayList<Node> reconstruct_sol (Node currentNode, int i){
+    public ArrayList<Node> reconstruct_sol (Node currentNode, int i){
             
         ArrayList<Node> sol = new ArrayList<Node>();
         Node aux_node = currentNode;
@@ -28,9 +28,9 @@ public class GraphSearchStrategy implements SearchStrategy {
             sol.add(aux_node);
             aux_node = aux_node.getParentNode();
         }
-        return Collections.reverse(sol);
-    }
-  */  
+        Collections.reverse(sol);
+        return sol;
+    }  
 
     private ArrayList<Node> successors (SearchProblem p, Node node){
         ArrayList<Node> succ = new ArrayList<Node>();
@@ -50,7 +50,7 @@ public class GraphSearchStrategy implements SearchStrategy {
         
         ArrayList<Node> explored = new ArrayList<Node>();
             //add and remove 
-        Queue<Node> frontier = new LinkedList<Node> (); 
+        Deque<Node> frontier = new LinkedList<Node> (); 
 
         State currentState = p.getInitialState();
         Node currentNode = new  Node(null, null, currentState);
@@ -68,11 +68,13 @@ public class GraphSearchStrategy implements SearchStrategy {
 
         while (null!=(frontier.peek())){
 
-            currentNode = frontier.remove();
+            currentNode = frontier.pop();
             currentState = currentNode.getState();
 
             if (p.isGoal(currentState)) {
                 System.out.println((i++) + " - END - " + currentState);
+                for (Node n: reconstruct_sol(currentNode, i))
+                    System.out.println( n.getState() + "," + n.getAction() + ") \n");
                 return currentState;
             }
 

@@ -19,6 +19,7 @@ SET OF ACTIONS:
     Add number (x) to position (y,z)
 
     PRECONDITIONS:
+        the previous number on position x is not 0  
         the number x is not bigger than nxn
         and is not repeated
 

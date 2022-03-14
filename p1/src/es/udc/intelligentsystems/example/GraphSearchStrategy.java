@@ -29,6 +29,8 @@ public class GraphSearchStrategy implements SearchStrategy {
             aux_node = aux_node.getParentNode();
         }
         Collections.reverse(sol);
+        for(Node n : sol)
+            System.out.println(n.getState() + n.getActio() + "\n");
         return sol;
     }  
 

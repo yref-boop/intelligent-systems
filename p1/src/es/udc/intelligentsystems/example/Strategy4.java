@@ -2,7 +2,7 @@ package es.udc.intelligentsystems.example;
 
 import es.udc.intelligentsystems.*;
 
-import java.util.ArrayList;
+import java.util.*;
 
 public class Strategy4 implements SearchStrategy {
 
@@ -10,14 +10,17 @@ public class Strategy4 implements SearchStrategy {
         
     public ArrayList<Node> reconstruct_sol (Node currentNode, int i){
             
-        ArrayList<Node> sol = new ArrayList<Node>();
+        ArrayList<Node> sol = new ArrayList<>();
         Node aux_node = currentNode;
 
         while (aux_node!=null){
             sol.add(aux_node);
             aux_node = aux_node.getParentNode();
         }
-        return Collections.reverse(sol);
+        Collections.reverse(sol);
+        for(Node n : sol)
+            System.out.println(n.getState() + n.getAction() + "\n");
+        return sol;
     }
     
 

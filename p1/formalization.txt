@@ -16,12 +16,17 @@ INITIAL STATE:
     a matrix of integers, initialized to 0 except the given data
 
 SET OF ACTIONS:
-    Add number (x) to position (y,z)   
+    Add number (x) to position (y,z)
+
+    PRECONDITIONS:
+        the number x is not bigger than nxn
+        and is not repeated
+
 TRANSITION MODEL:
     
+
 GOAL TEST:
     sum of columns & sum of rows & sum of diagonal == wanted number
-
 
 POSSIBLE FUTURE HEURISTICS:
     symmetric matrix

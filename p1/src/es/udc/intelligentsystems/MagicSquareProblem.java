@@ -99,8 +99,11 @@ public class MagicSquareProblem extends SearchProblem {
         }
     }
 
+    private Action[] actionList;
+
     public MagicSquareProblem(MagicSquareState initialState){
         super (initialState);
+        actionList = actions(initialState);
     }
 
     public Action[] actions(State st){

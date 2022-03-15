@@ -1,4 +1,4 @@
-package es.udc.intelligentsystems.example;
+package es.udc.intelligentsystems;
 
 import es.udc.intelligentsystems.Action;
 import es.udc.intelligentsystems.State;
@@ -13,7 +13,7 @@ public class MagicSquareProblem extends SearchProblem {
         //allows dynamic growing (n can be calculated easily)
 
         public ArrayList<Integer> values;
-        public int n = nValue(values);
+        public int n;
 
         private int nValue(ArrayList<Integer> list){
             if (list.isEmpty())
@@ -59,6 +59,7 @@ public class MagicSquareProblem extends SearchProblem {
         //constructor
         public MagicSquareState(ArrayList<Integer> list){
             this.values = list;
+            this.n = nValue(list);
         }
     }
 

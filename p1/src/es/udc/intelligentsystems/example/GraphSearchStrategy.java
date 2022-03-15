@@ -4,18 +4,7 @@ import es.udc.intelligentsystems.*;
 
 import java.util.*;
 
-public class GraphSearchStrategy implements SearchStrategy {
-
-// Strategy4 fails when it reaches a state that has no successors. 
-// However, there may  be states encountered previously that still 
-// have unexplored successors. 
-// The  strategy Graph_Search, described in class, solves this by 
-// keeping track of a frontier  that stores the successors states 
-// encountered while they are not explored.  
-// Implement a class called GraphSearchStrategy (that extends Strategy) 
-// that  implements this strategy 
-// (you may find that using Strategy4 as a template is helpful
-   
+public class GraphSearchStrategy implements SearchStrategy {  
 
     public GraphSearchStrategy() {}
         
@@ -30,7 +19,7 @@ public class GraphSearchStrategy implements SearchStrategy {
         }
         Collections.reverse(sol);
         for(Node n : sol)
-            System.out.println(n.getState() + n.getActio() + "\n");
+            System.out.println(n.getState() + " " + n.getAction());
         return sol;
     }  
 
@@ -75,8 +64,7 @@ public class GraphSearchStrategy implements SearchStrategy {
 
             if (p.isGoal(currentState)) {
                 System.out.println((i++) + " - END - " + currentState);
-                for (Node n: reconstruct_sol(currentNode, i))
-                    System.out.println( n.getState() + "," + n.getAction() + ") \n");
+                reconstruct_sol(currentNode, i);
                 return currentState;
             }
 

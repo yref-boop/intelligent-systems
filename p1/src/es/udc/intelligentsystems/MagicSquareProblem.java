@@ -130,12 +130,11 @@ public class MagicSquareProblem extends SearchProblem {
         int result = ((state.n * (state.n * state.n + 1))/2);
         int n = state.n;
         int i = 0;
-        int auxVal;
-        int auxValD = 0;
-        int auxPos;
+        int auxVal, auxPos, auxValD;
 
         ArrayList<Boolean> bValues = new ArrayList<Boolean>();
 
+        auxValD = 0;
         while (i < (n*n)){
             
             auxVal = 0;

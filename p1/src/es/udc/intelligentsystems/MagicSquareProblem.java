@@ -137,25 +137,48 @@ public class MagicSquareProblem extends SearchProblem {
     public boolean isGoal(State st){
         MagicSquareState state = (MagicSquareState) st;
 
-        int n = state.n, i = 0, prevResult = 0, result = 0;
+        int n = state.n, i = 0, result = 0;
+        int givenResult = (n*n*n+n)/2;
 
-        for (int j = 0; j < n; j++) { prevResult += state.values.get(j); }
-
+        
+        //Horizontales
         for (int l = 0; l < n; l++) {
             for (int k = i; k < i + n; k++) { result += state.values.get(k); }
-            if (result != prevResult) return false;
+            if (result != givenResult) return false;
             result = 0;
             i += n;
         }
 
-        i = 0;
-        for (int l = 0; l < n; l++) {
-            for (int k = i; k < i + (n * (n - 1)); k += n) { result += state.values.get(k); }
-            if (result != prevResult) return false;
+        //Verticales
+        //Verticales
+/*        for (int l = 0; l < n; l++) {
+            for (int k = l; k < n * (n - 1) + l; k += n) { result += state.values.get(k); }
+            if (result != givenResult) return false;
             result = 0;
-            i += n;
+   //     }
+
+        
+ //       System.out.println("3");
+        //Diagonal derecha
+
+*/        for (int l = 0; l < n*n; l += n+1) {
+            result += state.values.get(l);
+            if (result != givenResult) return false;
+            result = 0;
         }
 
-        return true;
-    }   
+        System.out.println("4");
+        //Diagonal izquierda
+
+        for (int l = n-1; l < n*(n-1); l += n-1) {
+            result += state.values.get(l);
+            if (result != givenResult) return false;
+            result = 0;
+        }
+
+        
+        System.out.println("5");
+        
+        return true; 
+    }
 }

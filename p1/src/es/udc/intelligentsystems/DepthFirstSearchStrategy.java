@@ -1,5 +1,6 @@
-import es.udc.intelligentsystems.*;
+package es.udc.intelligentsystems;
 
+import es.udc.intelligentsystems.*;
 import java.util.*;
 
 public class DepthFirstSearchStrategy implements SearchStrategy {  

@@ -44,7 +44,7 @@ public class MagicSquareProblem extends SearchProblem {
 
             MagicSquareState that = (MagicSquareState) o;
 
-            return that.values == values;
+            return that.values.equals(values);
         }
 
         @Override
@@ -89,10 +89,13 @@ public class MagicSquareProblem extends SearchProblem {
         @Override
         public State applyTo(State st){
             MagicSquareState state = (MagicSquareState) st;
-            int currentValue = state.values.get(position);
-            if (currentValue == 0)
-                state.values.set(position, newValue);
-            return state;
+
+            ArrayList<Integer> newValues = new ArrayList<Integer>(state.values);
+
+            if (newValues.get(position) == 0)
+                newValues.set(position, newValue);
+
+            return new MagicSquareState(newValues);
         }
 
         //constructor
@@ -133,49 +136,26 @@ public class MagicSquareProblem extends SearchProblem {
     @Override
     public boolean isGoal(State st){
         MagicSquareState state = (MagicSquareState) st;
-        int result = ((state.n * (state.n * state.n + 1))/2);
-        int n = state.n;
-        int i = 0;
-        int auxVal, auxPos, auxValD;
-        boolean bool = true;
 
-        ArrayList<Boolean> bvalues = new ArrayList<Boolean>();
+        int n = state.n, i = 0, prevResult = 0, result = 0;
 
-        auxValD = 0;
-        while (i < (n*n)){
-            
-            auxVal = 0;
-            auxPos = 0;
-            
-            while (auxPos < n) {
-                //horizontal values//
-                auxVal = auxVal + state.values.get((i/n) + auxPos);
-                auxPos++;
-            }  
-            bvalues.add(auxVal == result);
-            auxVal = 0;
-            auxPos = 0;
+        for (int j = 0; j < n; j++) { prevResult += state.values.get(j); }
 
-            while (auxPos < n) {
-                //vertical values//
-                auxVal = auxVal + state.values.get((i%n) + n * auxPos);
-                auxPos++;
-            }
-                //main diagonal// 
-            bvalues.add(auxVal == result);
-            auxVal = 0;
-
-            auxValD = auxValD + (state.values.get(i));
-
-            i = i + n + 1;
-        }
-        bvalues.add(auxValD == result);
-
-        for(Boolean b : bvalues){
-            if (b == false)
-                bool = false;
+        for (int l = 0; l < n; l++) {
+            for (int k = i; k < i + n; k++) { result += state.values.get(k); }
+            if (result != prevResult) return false;
+            result = 0;
+            i += n;
         }
 
-        return bool;
+        i = 0;
+        for (int l = 0; l < n; l++) {
+            for (int k = i; k < i + (n * (n - 1)); k += n) { result += state.values.get(k); }
+            if (result != prevResult) return false;
+            result = 0;
+            i += n;
+        }
+
+        return true;
     }   
 }

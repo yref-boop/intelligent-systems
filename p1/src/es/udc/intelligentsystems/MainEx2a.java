@@ -20,7 +20,7 @@ public class MainEx2a {
         
         SearchProblem square = new MagicSquareProblem(initialState);
                 
-        SearchStrategy searcher = new DepthFirstSearchStrategy();
+        SearchStrategy searcher = new BreadthFirstSearchStrategy();
 
         System.out.println(searcher.solve(square));
     }

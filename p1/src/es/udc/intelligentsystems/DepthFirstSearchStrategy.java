@@ -31,6 +31,7 @@ public class DepthFirstSearchStrategy implements SearchStrategy {
             State st = p.result(node.getState(), act);
             Node aux_node = new Node(node, act, st);
             succ.add(aux_node);
+            System.out.println("i");
         }             
         return succ;
     }
@@ -82,7 +83,6 @@ public class DepthFirstSearchStrategy implements SearchStrategy {
             ArrayList<Node> succs = successors(p, currentNode);
 
             for (Node succNode: succs){
-                System.out.println ("i");
                 State st = succNode.getState();
                      System.out.println((i++) + " - RESULT(" + succNode.getState() + "," + succNode.getAction() + ")=" + st);
                 if (!(explored.stream().anyMatch(n -> n.state.equals(st)))) {

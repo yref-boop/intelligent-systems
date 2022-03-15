@@ -154,7 +154,7 @@ public class MagicSquareProblem extends SearchProblem {
                 auxVal = auxVal + state.values.get((i%n) + n * auxPos);
                 auxPos++;
             }
-            
+                //main diagonal// 
             bValues.add(auxVal == result);
             auxVal = 0;
 

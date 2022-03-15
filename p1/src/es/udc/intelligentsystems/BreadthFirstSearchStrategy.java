@@ -4,9 +4,9 @@ import es.udc.intelligentsystems.*;
 
 import java.util.*;
 
-public class GraphSearchStrategy implements SearchStrategy {  
+public class BreadthFirstSearchStrategy implements SearchStrategy {  
 
-    public GraphSearchStrategy() {}
+    public BreadthFirstSearchStrategy() {}
         
     public ArrayList<Node> reconstruct_sol (Node currentNode, int i){
             

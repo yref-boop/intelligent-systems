@@ -23,10 +23,11 @@ public class DepthFirstSearchStrategy implements SearchStrategy {
     }  
 
     private ArrayList<Node> successors (SearchProblem p, Node node){
+        
         ArrayList<Node> succ = new ArrayList<Node>();
         Action[] availableActions = p.actions(node.state);
 
-        for (Action act: availableActions){     
+        for (Action act: availableActions){ 
             State st = p.result(node.getState(), act);
             Node aux_node = new Node(node, act, st);
             succ.add(aux_node);
@@ -43,6 +44,7 @@ public class DepthFirstSearchStrategy implements SearchStrategy {
         Deque<Node> frontier = new LinkedList<Node> (); 
 
         State currentState = p.getInitialState();
+        
         Node currentNode = new  Node(null, null, currentState);
 
         int i = 1;
@@ -63,7 +65,7 @@ public class DepthFirstSearchStrategy implements SearchStrategy {
         System.out.println((i++) + " - Starting search at " + currentNode.state);
 
         while (null!=(frontier.peek())){
-
+                
             currentNode = frontier.pop();
             currentState = currentNode.getState();
 
@@ -76,9 +78,11 @@ public class DepthFirstSearchStrategy implements SearchStrategy {
 
             explored.add(currentNode);
             expanded++;
+
             ArrayList<Node> succs = successors(p, currentNode);
 
             for (Node succNode: succs){
+                System.out.println ("i");
                 State st = succNode.getState();
                      System.out.println((i++) + " - RESULT(" + succNode.getState() + "," + succNode.getAction() + ")=" + st);
                 if (!(explored.stream().anyMatch(n -> n.state.equals(st)))) {

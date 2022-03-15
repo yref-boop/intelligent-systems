@@ -14,12 +14,14 @@ public class MainEx2a {
         ArrayList<Integer> list = new ArrayList<Integer>();
             list.add(4); list.add(9); list.add(2); list.add(3); list.add(5); 
             list.add(0); list.add(0); list.add(1); list.add(0);
+         Collections.reverse(list);
 
         MagicSquareProblem.MagicSquareState initialState = new MagicSquareProblem.MagicSquareState(list);
         
         SearchProblem square = new MagicSquareProblem(initialState);
-
+                
         SearchStrategy searcher = new DepthFirstSearchStrategy();
+
         System.out.println(searcher.solve(square));
     }
 }

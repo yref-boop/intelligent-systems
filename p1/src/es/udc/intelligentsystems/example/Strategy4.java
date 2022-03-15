@@ -19,7 +19,7 @@ public class Strategy4 implements SearchStrategy {
         }
         Collections.reverse(sol);
         for(Node n : sol)
-            System.out.println(n.getState() + n.getAction() + "\n");
+            System.out.println(n.getState() + " " + n.getAction());
         return sol;
     }
     

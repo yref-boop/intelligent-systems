@@ -1,5 +1,3 @@
-package es.udc.intelligentsystems.example;
-
 import es.udc.intelligentsystems.*;
 
 import java.util.*;
@@ -47,13 +45,19 @@ public class DepthFirstSearchStrategy implements SearchStrategy {
         Node currentNode = new  Node(null, null, currentState);
 
         int i = 1;
+        int expanded, created;
+        expanded = 0;
+        created = 1;
 
         if (p.isGoal(currentNode.getState())) {
              System.out.println((i++) + " - END - " + currentNode.getState());
+             System.out.println ("number of expanded nodes" + expanded + "\n" + "number of created nodes" + created);
              return currentNode.getState();
         }
-        else 
+        else { 
             frontier.add(currentNode);
+            created++;
+        }
 
         System.out.println((i++) + " - Starting search at " + currentNode.state);
 
@@ -64,11 +68,13 @@ public class DepthFirstSearchStrategy implements SearchStrategy {
 
             if (p.isGoal(currentState)) {
                 System.out.println((i++) + " - END - " + currentState);
+                System.out.println ("number of expanded nodes" + expanded + "\n" + "number of created nodes" + created);
                 reconstruct_sol(currentNode, i);
                 return currentState;
             }
 
             explored.add(currentNode);
+            expanded++;
             ArrayList<Node> succs = successors(p, currentNode);
 
             for (Node succNode: succs){
@@ -77,6 +83,7 @@ public class DepthFirstSearchStrategy implements SearchStrategy {
                 if (!(explored.stream().anyMatch(n -> n.state.equals(st)))) {
                     if (!(frontier.stream().anyMatch(n -> n.state.equals(st)))) {
                         frontier.add(succNode);
+                        created++;
                         System.out.println((i++) + " - " + st + " NOT explored");
                     }
                 else

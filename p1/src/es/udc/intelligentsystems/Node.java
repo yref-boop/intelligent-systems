@@ -4,7 +4,7 @@ import es.udc.intelligentsystems.*;
 
 import java.util.ArrayList;
 
-public class Node {
+public class Node implements Comparable<Node>{
   
     //attributes
     private Node parent;
@@ -12,6 +12,18 @@ public class Node {
     public State state;
     public float heuristicValue;
     public float heuristicPathValue;
+
+    @Override
+    public int compareTo(Node other){
+        int value;
+        if (this.heuristicValue == other.heuristicValue) return 0;
+        else {
+            if ((this.heuristicValue - other.heuristicValue)<0)
+                return -1;
+            else
+                return 1;
+        }
+    }
 
  
     //constructor

@@ -36,21 +36,17 @@ public class DepthFirstSearchStrategy implements SearchStrategy {
     }
 
 
+    
     @Override
     public State solve(SearchProblem p) throws Exception{
-        
         ArrayList<Node> explored = new ArrayList<Node>();
-            //add and remove 
         Deque<Node> frontier = new LinkedList<Node> (); 
-
+        int i = 1;
         State currentState = p.getInitialState();
         
         Node currentNode = new  Node(null, null, currentState);
 
-        int i = 1;
-        int expanded, created;
-        expanded = 0;
-        created = 1;
+        int expanded = 0, created = 1;
 
         if (p.isGoal(currentNode.getState())) {
              System.out.println((i++) + " - END - " + currentNode.getState());

@@ -27,10 +27,10 @@ public class MagicSquareProblem extends SearchProblem {
         @Override
         public String toString(){
             StringBuilder sb = new StringBuilder();
-            for (int i = values.size() - 1; i >= 0; i--) {
+            for (int i = 0; i <= values.size() - 1; i++) {
                 int num = values.get(i);
                 sb.append(num);
-                if (i != 0)
+                if (i != values.size()-1)
                     sb.append(",");
             }
             String result = sb.toString();
@@ -132,53 +132,31 @@ public class MagicSquareProblem extends SearchProblem {
         acts.toArray(arrayActs);
         return arrayActs;
     }
-
     @Override
     public boolean isGoal(State st){
         MagicSquareState state = (MagicSquareState) st;
 
-        int n = state.n, i = 0, result = 0;
+        int n = state.n, result = 0;
         int givenResult = (n*n*n+n)/2;
 
-        
-        //Horizontales
         for (int l = 0; l < n; l++) {
-            for (int k = i; k < i + n; k++) { result += state.values.get(k); }
+            //Horizontal
+            for (int k = l*n; k < l*n + n; k++) { result += state.values.get(k); }
             if (result != givenResult) return false;
             result = 0;
-            i += n;
+            //Vertical
+            for (int k = l; k < n*n; k+=n) { result += state.values.get(k); }
+            if (result != givenResult) return false;
+            result = 0;
         }
 
-        //Verticales
-        //Verticales
-/*        for (int l = 0; l < n; l++) {
-            for (int k = l; k < n * (n - 1) + l; k += n) { result += state.values.get(k); }
-            if (result != givenResult) return false;
-            result = 0;
-   //     }
-
-        
- //       System.out.println("3");
         //Diagonal derecha
+        for (int l = 0; l < n*n; l += n+1) { result += state.values.get(l); }
+        if (result != givenResult) return false;
+        result = 0;
 
-*/        for (int l = 0; l < n*n; l += n+1) {
-            result += state.values.get(l);
-            if (result != givenResult) return false;
-            result = 0;
-        }
-
-        System.out.println("4");
         //Diagonal izquierda
-
-        for (int l = n-1; l < n*(n-1); l += n-1) {
-            result += state.values.get(l);
-            if (result != givenResult) return false;
-            result = 0;
-        }
-
-        
-        System.out.println("5");
-        
-        return true; 
+        for (int l = n-1; l < n*n-1; l += n-1) { result += state.values.get(l); }
+        return result == givenResult;
     }
 }

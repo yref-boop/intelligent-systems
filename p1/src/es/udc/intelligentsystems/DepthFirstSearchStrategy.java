@@ -31,7 +31,6 @@ public class DepthFirstSearchStrategy implements SearchStrategy {
             State st = p.result(node.getState(), act);
             Node aux_node = new Node(node, act, st);
             succ.add(aux_node);
-            System.out.println("i");
         }             
         return succ;
     }

@@ -21,8 +21,12 @@ public class ASearchStrategy extends InformedSearchStrategy {
             return sol;
     }  
 
+    static Node getSameState(Queue<Node> nodes, State st) {
+        for (Node node : nodes) { if (node.state.equals(st)) return node; }
+        return null;
+    }
 
-    private ArrayList<Node> successors (SearchProblem p, Node node, Heuristic h){
+    private ArrayList<Node> successors (SearchProblem p, Node node){
         
         ArrayList<Node> succ = new ArrayList<Node>();
         Action[] availableActions = p.actions(node.state);
@@ -30,8 +34,6 @@ public class ASearchStrategy extends InformedSearchStrategy {
         for (Action act: availableActions){ 
             State st = p.result(node.getState(), act);
             Node aux_node = new Node(node, act, st);
-            aux_node.setHeuristicValue = h.evaluate(st);
-            aux_node.setHeuristicPathValue = h.evaluate(node.getState()) + h.evaluate(currentState);
             succ.add(aux_node);
         }             
         return succ;
@@ -44,8 +46,8 @@ public class ASearchStrategy extends InformedSearchStrategy {
 
         State currentState = p.getInitialState();
         Node currentNode = new Node (null, null, currentState);
-        currentNode.setHeuristicValue = h.evaluate(currentState);
-        currentNode.setHeuristicPathValue = h.evaluate(currentState);
+//        currentNode.setHeuristicValue = h.evaluate(currentState);
+//        currentNode.setHeuristicPathValue = ;
 
         int expanded = 0, created = 1;
 
@@ -76,9 +78,20 @@ public class ASearchStrategy extends InformedSearchStrategy {
             explored.add(currentNode);
             expanded++;
 
-            ArrayList<Node> children = successors(p, currentNode, h);
+            ArrayList<Node> children = successors(p, currentNode);
             for (Node childNode : children){
-                 
+                State st = childNode.getState();
+                childNode.setHeuristicValue = h.evaluate(currentNode.getState());
+                child.setHeuristicPathValue = h.evaluate(currentNode.getState()) + currentNode.heuristicPathValue;
+                 if (!(explored.stream().anyMatch(n -> n.state.equals(st)))) {
+                      if (frontier.stream().anyMatch(n -> n.state.equals(st))) {
+                          Node matchNode = getSameState(frontier, st);
+                          if(childNode.heuristicPathValue + childNode.heuristicValue < matchNode.heuristicPathValue) {
+                              frontier.remove(matchNode);
+                          }
+                      }
+                      frontier.insert(matchNode);
+                 }
             }
         }
         throw new Exception ("while out");

@@ -2,7 +2,29 @@ package es.udc.intelligentsystems;
 import java.util.*;
 import es.udc.intelligentsystems.*;
 
-public abstract class HeuristicImplemenation {
+public abstract class HeuristicImplementation {
+
+    public float odd(State st) {
+        MagicSquareProblem.MagicSquareState s = (MagicSquareProblem.MagicSquareState) st;
+        return Math.abs((s.n*s.n)/2 - s.values.get((s.n*s.n-1)/2));
+    }
+
+    int getCornerSum (MagicSquareProblem.MagicSquareState sq) {
+        return sq.values.get(0) + sq.values.get(sq.n-1)
+             + sq.values.get(sq.n*sq.n-sq.n) + sq.values.get(sq.n*sq.n-1);
+    }
+
+    public float oddCentral(State st) {
+        MagicSquareProblem.MagicSquareState s = (MagicSquareProblem.MagicSquareState) st;
+        return Math.abs(s.values.get(s.values.get((s.n*s.n-1)/2))*4 - getCornerSum(s));
+    }
+
+    public float evenCentral(State st) {
+        MagicSquareProblem.MagicSquareState s = (MagicSquareProblem.MagicSquareState) st;
+        int topLeft = s.n/2*s.n-s.n/2-1;
+        return Math.abs(s.values.get(topLeft) + s.values.get(topLeft+1) + s.values.get(topLeft+s.n)
+              + s.values.get(topLeft+s.n+1) - getCornerSum(s));
+    }
 
     public float value(State st){
         MagicSquareProblem.MagicSquareState s = (MagicSquareProblem.MagicSquareState) st;
@@ -29,6 +51,10 @@ public abstract class HeuristicImplemenation {
     }
 
     public float evaluate(State e) {
-        return (value(e) + repetivity(e));
+        MagicSquareProblem.MagicSquareState s = (MagicSquareProblem.MagicSquareState) e;
+        if (s.n%2 == 0){
+            return (value(e) + repetivity(e) + evenCentral(e) + corners(e));
+        }
+        else return (value(e) + repetivity(e) + oddCentral(e) + odd(e) + corners(e));
     }
 }

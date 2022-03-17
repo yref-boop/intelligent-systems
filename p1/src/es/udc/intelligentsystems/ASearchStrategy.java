@@ -3,7 +3,7 @@ package es.udc.intelligentsystems;
 import es.udc.intelligentsystems.*;
 import java.util.*;
 
-public class ASearchStrategy extends InformedSearchStrategy {
+public class ASearchStrategy implements InformedSearchStrategy {
 
     public ASearchStrategy() {}
 
@@ -41,13 +41,14 @@ public class ASearchStrategy extends InformedSearchStrategy {
 
     public State solve (SearchProblem p, Heuristic h) throws Exception{
         ArrayList<Node> explored = new ArrayList<Node>();
-        Queue<Node> frontier = new PriorityQueue<>();
+        PriorityQueue<Node> frontier = new PriorityQueue<>();
         int i = 1;
 
         State currentState = p.getInitialState();
         Node currentNode = new Node (null, null, currentState);
-//        currentNode.setHeuristicValue = h.evaluate(currentState);
-//        currentNode.setHeuristicPathValue = ;
+
+        currentNode.setgValue(0);
+        currentNode.setfValue(currentNode.getgValue + h.evaluate(currentNode.getState()));
 
         int expanded = 0, created = 1;
 
@@ -81,17 +82,18 @@ public class ASearchStrategy extends InformedSearchStrategy {
             ArrayList<Node> children = successors(p, currentNode);
             for (Node childNode : children){
                 State st = childNode.getState();
-                childNode.setHeuristicValue = h.evaluate(currentNode.getState());
-                child.setHeuristicPathValue = h.evaluate(currentNode.getState()) + currentNode.heuristicPathValue;
-                 if (!(explored.stream().anyMatch(n -> n.state.equals(st)))) {
-                      if (frontier.stream().anyMatch(n -> n.state.equals(st))) {
-                          Node matchNode = getSameState(frontier, st);
-                          if(childNode.heuristicPathValue + childNode.heuristicValue < matchNode.heuristicPathValue) {
-                              frontier.remove(matchNode);
-                          }
-                      }
-                      frontier.insert(matchNode);
-                 }
+                childNode.setgValue(h.evaluate(currentNode.getState()) + 1);
+                childNode.setfValue(childNode.getgValue() + h.evaluate(childNode.getState()));
+                    if (!(explored.stream().anyMatch(n -> n.state.equals(st)))) {
+                        if (frontier.stream().anyMatch(n -> n.state.equals(st))) {
+                            Node matchNode = getSameState(frontier, st);
+                            if(childNode.getfValue() < matchNode.getgValue())
+                                frontier.remove(matchNode);
+                            else
+                                continue;
+                    }
+                      frontier.add(childNode);   
+                }
             }
         }
         throw new Exception ("while out");

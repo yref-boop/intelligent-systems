@@ -10,21 +10,20 @@ public class Node implements Comparable<Node>{
     private Node parent;
     public Action action;
     public State state;
-    public float heuristicValue;
-    public float heuristicPathValue;
+    public float g;
+    public float f;
 
     @Override
     public int compareTo(Node other){
         int value;
-        if (this.heuristicValue == other.heuristicValue) return 0;
+        if (this.g == other.g) return 0;
         else {
-            if ((this.heuristicValue - other.heuristicValue)<0)
+            if ((this.g - other.g)<0)
                 return -1;
             else
                 return 1;
         }
     }
-
  
     //constructor
     public Node(Node parent, Action action, State state) {
@@ -44,11 +43,11 @@ public class Node implements Comparable<Node>{
     public void setState(State st){
         this.state = st;
     }
-    public void setHeuristicValue(float f){
-        this.heuristicValue = f;
+    public void setgValue(float f){
+        this.g = f;
     }
-    public void setHeuristicPathValue(float f){
-        this.heuristicValue = f;
+    public void setfValue(float f){
+        this.f = f;
     }
 
     //getters
@@ -61,10 +60,10 @@ public class Node implements Comparable<Node>{
     public State getState(){
         return this.state;
     }
-    public float getHeuristicValue(){
-        return this.heuristicValue;
+    public float getgValue(){
+        return this.g;
     }
-    public float getHeuristicPathValue(){
-        return this.heuristicPathValue;
+    public float getfValue(){
+        return this.f;
     }
 }

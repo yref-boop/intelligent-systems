@@ -37,6 +37,7 @@ public class MagicSquareProblem extends SearchProblem {
             return result;
         }
 
+        //equals checks the value of the states
         @Override
         public boolean equals(Object o){
             if (this == o) return true;
@@ -81,6 +82,9 @@ public class MagicSquareProblem extends SearchProblem {
             return result;
         }
 
+
+        //all possible actions are applicable since they cannot have non-applicable values
+        //this is checked on the possible actions
         @Override
         public boolean isApplicable (State st){
             return true;
@@ -111,18 +115,55 @@ public class MagicSquareProblem extends SearchProblem {
         super (initialState);
         actionList = actions(initialState);
     }
+    
+    //this auxiliar function discards some possible actions that cannot lead to a solution 
+    //in order to trim the node tree
+    public boolean actions_aux (MagicSquareState state){
+        int n = state.n, result = 0;
+        int givenResult = (n*n*n+n)/2;
 
+        for (int l = 0; l < n; l++) {
+            //rows
+            for (int k = l*n; k < l*n + n; k++) { result += state.values.get(k); }
+            if (result > givenResult) return false;
+            result = 0;
+            //columns
+            for (int k = l; k < n*n; k+=n) { result += state.values.get(k); }
+            if (result > givenResult) return false;
+            result = 0;
+        }
+
+        //right diagonal
+        for (int l = 0; l < n*n; l += n+1) { result += state.values.get(l); }
+        if (result > givenResult) return false;
+        result = 0;
+
+        //left diagonal
+        for (int l = n-1; l < n*n-1; l += n-1) { result += state.values.get(l); }
+        return result <= givenResult;
+    }
+
+    //here some valid, yet non-leading to the solution actions are discarded (checked by applicable)
     public Action[] actions(State st){
         MagicSquareState state = (MagicSquareState) st;
+        List<Integer> copy = new ArrayList<>(state.values);
         int aux_value1 = state.n * state.n -1;
         int aux_value2;
+        boolean applicable = true;
         ArrayList<Action> acts = new ArrayList<Action>();
         
         while (aux_value1 >= 0){
             aux_value2 = state.n * state.n;
             while (aux_value2 > 0){
                 MagicSquareAction act = new MagicSquareAction(aux_value1, aux_value2);
-                acts.add(act);
+                for(int i_value : copy){
+                    if(i_value == aux_value2)
+                        applicable = false;
+                }
+                
+                if((actions_aux(state))&&(applicable)&&(copy.get(aux_value1) == 0))
+                    acts.add(act);
+                applicable = true;
                 aux_value2--;
             }
             aux_value1--;
@@ -132,6 +173,18 @@ public class MagicSquareProblem extends SearchProblem {
         acts.toArray(arrayActs);
         return arrayActs;
     }
+
+    //auxiliar function that checks if there are numbers repeated on a given state
+    public float repetivity(MagicSquareProblem.MagicSquareState s) {
+        int duplicates = 0;
+        List<Integer> checked = new ArrayList<>();
+        for (Integer integer : s.values) {
+            if (checked.contains(integer)) duplicates++;
+            else checked.add(integer);
+        }
+        return duplicates;
+    }
+
     @Override
     public boolean isGoal(State st){
         MagicSquareState state = (MagicSquareState) st;
@@ -139,23 +192,25 @@ public class MagicSquareProblem extends SearchProblem {
         int n = state.n, result = 0;
         int givenResult = (n*n*n+n)/2;
 
+        if (repetivity(state) != 0) return false;
+
         for (int l = 0; l < n; l++) {
-            //Horizontal
+            //rows
             for (int k = l*n; k < l*n + n; k++) { result += state.values.get(k); }
             if (result != givenResult) return false;
             result = 0;
-            //Vertical
+            //columns
             for (int k = l; k < n*n; k+=n) { result += state.values.get(k); }
             if (result != givenResult) return false;
             result = 0;
         }
 
-        //Diagonal derecha
+        //right diagonal
         for (int l = 0; l < n*n; l += n+1) { result += state.values.get(l); }
         if (result != givenResult) return false;
         result = 0;
 
-        //Diagonal izquierda
+        //left diagonal
         for (int l = n-1; l < n*n-1; l += n-1) { result += state.values.get(l); }
         return result == givenResult;
     }

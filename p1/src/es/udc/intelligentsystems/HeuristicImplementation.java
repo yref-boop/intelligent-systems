@@ -191,15 +191,6 @@ public class HeuristicImplementation extends Heuristic {
     public float evaluate(State st) {
         MagicSquareProblem.MagicSquareState s = (MagicSquareProblem.MagicSquareState) st;
 
-      // return(goal(e)/100 + repetivity(e)*10 + cross(e) + diagonals(e) + rows(e) + columns(e) +frame (e) + hor(e) + axis(e) + value(e));
-
-
-        //return(goal(s) + rows(s) + columns(s) + diagonals(s) + repetivity(s)*1000) + corners(s)*10;
-
-
-        
-return (repetivity(s)*2+axis(s)+corners(s)/10);
-        //return (zeros(s) + repetivity(s)*2 + axis(s) + corners(s)/10 + rows(s) + columns(s) + diagonals(s));
-       //return (100*repetivity(e) + goal(e) + cross(e) + frame(e));    
+        return (repetivity(s)*2+axis(s)+corners(s)/10); 
     }
 }

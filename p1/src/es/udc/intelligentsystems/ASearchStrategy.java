@@ -85,29 +85,29 @@ public class ASearchStrategy implements InformedSearchStrategy {
             for (Node childNode : children){
                 created++;
                 State st = childNode.getState();
-//                System.out.println((i++) + ") RESULT:\n" + currentNode.getState()
-//                           + currentNode.getAction() + ":\n" + st);
+                System.out.println((i++) + ") RESULT:\n" + currentNode.getState()
+                           + currentNode.getAction() + ":\n" + st);
                 childNode.setgValue(h.evaluate(currentNode.getState()) + 1);
                 childNode.setfValue(childNode.getgValue() + h.evaluate(childNode.getState()));
                     if (!(explored.stream().anyMatch(n -> n.state.equals(st)))) {
                         if (frontier.stream().anyMatch(n -> n.state.equals(st))) {
                             Node matchNode = getSameState(frontier, st);
-//                          System.out.println((i++) + ") " + st + " already on frontier");
+                          System.out.println((i++) + ") " + st + " already on frontier");
                             if(childNode.getfValue() < matchNode.getgValue()){
-//                                System.out.println((i++) + ") " + matchNode.getState() + " more optimal");
+                                System.out.println((i++) + ") " + matchNode.getState() + " more optimal");
                                 frontier.remove(matchNode);
                             }
                             else {
-//                                System.out.println((i++) + ") no changes on frontier");
+                                System.out.println((i++) + ") no changes on frontier");
                                 continue;
                             }
                     } else {
-//                        System.out.println((i++) + ") " + st + " adding to frontier");
+                        System.out.println((i++) + ") " + st + " adding to frontier");
                         frontier.add(childNode);   
                     }
                 }
-//                else
-//                    System.out.println((i++) + ") " + st + " already explored");
+                else
+                    System.out.println((i++) + ") " + st + " already explored");
             }
         }
         throw new Exception ("no solution could be found");

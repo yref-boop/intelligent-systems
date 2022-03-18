@@ -48,7 +48,7 @@ public class ASearchStrategy implements InformedSearchStrategy {
         Node currentNode = new Node (null, null, currentState);
 
         currentNode.setgValue(0);
-        currentNode.setfValue(currentNode.getgValue + h.evaluate(currentNode.getState()));
+        currentNode.setfValue(currentNode.getgValue() + h.evaluate(currentNode.getState()));
 
         int expanded = 0, created = 1;
 
@@ -79,23 +79,37 @@ public class ASearchStrategy implements InformedSearchStrategy {
             explored.add(currentNode);
             expanded++;
 
+            System.out.println(currentNode.getState());
+
             ArrayList<Node> children = successors(p, currentNode);
             for (Node childNode : children){
+                created++;
                 State st = childNode.getState();
+//                System.out.println((i++) + ") RESULT:\n" + currentNode.getState()
+//                           + currentNode.getAction() + ":\n" + st);
                 childNode.setgValue(h.evaluate(currentNode.getState()) + 1);
                 childNode.setfValue(childNode.getgValue() + h.evaluate(childNode.getState()));
                     if (!(explored.stream().anyMatch(n -> n.state.equals(st)))) {
                         if (frontier.stream().anyMatch(n -> n.state.equals(st))) {
                             Node matchNode = getSameState(frontier, st);
-                            if(childNode.getfValue() < matchNode.getgValue())
+//                          System.out.println((i++) + ") " + st + " already on frontier");
+                            if(childNode.getfValue() < matchNode.getgValue()){
+//                                System.out.println((i++) + ") " + matchNode.getState() + " more optimal");
                                 frontier.remove(matchNode);
-                            else
+                            }
+                            else {
+//                                System.out.println((i++) + ") no changes on frontier");
                                 continue;
+                            }
+                    } else {
+//                        System.out.println((i++) + ") " + st + " adding to frontier");
+                        frontier.add(childNode);   
                     }
-                      frontier.add(childNode);   
                 }
+//                else
+//                    System.out.println((i++) + ") " + st + " already explored");
             }
         }
-        throw new Exception ("while out");
+        throw new Exception ("no solution could be found");
     }
 }

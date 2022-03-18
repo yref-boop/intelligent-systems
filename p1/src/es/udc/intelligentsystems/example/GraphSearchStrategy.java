@@ -39,15 +39,6 @@ public class GraphSearchStrategy implements SearchStrategy {
         //add and remove
         Deque<Node> frontier = new LinkedList<>();
         frontier.add(currentNode);
-            @Override
-    public State solve(SearchProblem p) throws Exception{
-        State currentState = p.getInitialState();
-        Node currentNode = new Node (null, null, currentState);
-
-        ArrayList<Node> explored = new ArrayList<>();
-        //add and remove
-        Deque<Node> frontier = new LinkedList<>();
-        frontier.add(currentNode);
 
         int i = 0;
         System.out.println(i++ + " - Starting search at " + currentNode.state);
@@ -75,9 +66,9 @@ public class GraphSearchStrategy implements SearchStrategy {
                         System.out.println(i++ + " - " + st + " NOT explored");
                     }
                     else System.out.println(i++ + " - " + st + " already explored");
+                    }
                 }
             }
-        }
         throw new Exception("No solution could be found");
     }
 }

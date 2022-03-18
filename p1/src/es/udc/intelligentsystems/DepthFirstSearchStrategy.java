@@ -1,93 +1,76 @@
 package es.udc.intelligentsystems;
-
-import es.udc.intelligentsystems.*;
 import java.util.*;
 
-public class DepthFirstSearchStrategy implements SearchStrategy {  
 
-    public DepthFirstSearchStrategy() {}
-        
-    public ArrayList<Node> reconstruct_sol (Node currentNode, int i){
-            
-        ArrayList<Node> sol = new ArrayList<Node>();
+public class DepthFirstSearchStrategy implements SearchStrategy {
+
+    public void reconstruct_sol (Node currentNode) {
+        ArrayList<Node> sol = new ArrayList<>();
         Node aux_node = currentNode;
 
-        while (aux_node!=null){
+        while (aux_node != null) {
             sol.add(aux_node);
             aux_node = aux_node.getParentNode();
         }
         Collections.reverse(sol);
-        for(Node n : sol)
-            System.out.println(n.getState() + " " + n.getAction());
-        return sol;
-    }  
-
-    private ArrayList<Node> successors (SearchProblem p, Node node){
-        
-        ArrayList<Node> succ = new ArrayList<Node>();
-        Action[] availableActions = p.actions(node.state);
-
-        for (Action act: availableActions){ 
-            State st = p.result(node.getState(), act);
-            Node aux_node = new Node(node, act, st);
-            succ.add(aux_node);
-        }             
-        return succ;
+        for(Node n : sol) System.out.println(n.getState().toString() + n.getAction());
     }
 
+    private ArrayList<Node> successors (SearchProblem p, Node node){
+        ArrayList<Node> successors = new ArrayList<>();
+        Action[] availableActions = p.actions(node.state);
 
+        for (Action act: availableActions){
+            State st = p.result(node.getState(), act);
+            Node aux_node = new Node(node, act, st);
+            successors.add(aux_node);
+        }
+        return successors;
+    }
     
     @Override
     public State solve(SearchProblem p) throws Exception{
-        ArrayList<Node> explored = new ArrayList<Node>();
-        Deque<Node> frontier = new LinkedList<Node> (); 
-        int i = 1;
-        State currentState = p.getInitialState();
-        
+ State currentState = p.getInitialState();
         Node currentNode = new  Node(null, null, currentState);
 
-        int expanded = 0, created = 1;
+        //frontier a Deque, to ease changes between Breadth and Depth first
+        ArrayList<Node> explored = new ArrayList<>();
+        Deque<Node> frontier = new LinkedList<> ();
 
-        if (p.isGoal(currentNode.getState())) {
-             System.out.println((i++) + " - END - " + currentNode.getState());
-             System.out.println ("number of expanded nodes" + expanded + "\n" + "number of created nodes" + created);
-             return currentNode.getState();
-        }
-        else { 
-            frontier.add(currentNode);
-            created++;
-        }
+        //simplifies code: isGoal is going to be checked after entering the loop
+        frontier.push(currentNode);
 
-        System.out.println((i++) + " - Starting search at " + currentNode.state);
+        int i = 1, created = 0;
+        System.out.println((i++) + ") Starting search at:\n" + currentNode.state);
 
-        while (null!=(frontier.peek())){
-                
-            currentNode = frontier.pop();
+        //fontier loop
+        while (frontier.peek() != null) {
+            currentNode = frontier.pop(); //equivalent to pop on Stack
             currentState = currentNode.getState();
 
             if (p.isGoal(currentState)) {
-                System.out.println((i++) + " - END - " + currentState);
-                System.out.println ("number of expanded nodes" + expanded + "\n" + "number of created nodes" + created);
-                reconstruct_sol(currentNode, i);
+                System.out.println((++i) + ") ***** END *****\n" + currentState);
+                System.out.println ("Number of expanded nodes: " + explored.size() + "\n" +
+                                    "Number of created nodes: " + created);
+                reconstruct_sol(currentNode);
                 return currentState;
             }
 
             explored.add(currentNode);
-            expanded++;
+            ArrayList<Node> successors = successors(p, currentNode);
 
-            ArrayList<Node> succs = successors(p, currentNode);
-
-            for (Node succNode: succs){
-                State st = succNode.getState();
-                     System.out.println((i++) + " - RESULT(" + succNode.getState() + "," + succNode.getAction() + ")=" + st);
-                if (!(explored.stream().anyMatch(n -> n.state.equals(st)))) {
-                    if (!(frontier.stream().anyMatch(n -> n.state.equals(st)))) {
-                        frontier.add(succNode);
-                        created++;
-                        System.out.println((i++) + " - " + st + " NOT explored");
+            //check all the successors
+            for (Node successorNode: successors) {
+                created++;
+                State st = successorNode.getState();
+                System.out.println((i++) + ") RESULT:\n" + successorNode.getState()
+                                         + successorNode.getAction() + ":\n" + st);
+                if (explored.stream().noneMatch(n -> n.state.equals(st))) {
+                    if (frontier.stream().noneMatch(n -> n.state.equals(st))) {
+                        frontier.push(successorNode);
+                        System.out.println((i++) + ") " + st + " NOT explored");
                     }
-                else
-                    System.out.println((i++) + " - " + st + " already explored");
+                    else System.out.println((i++) + ") " + st + " already explored");
                 }
             }
         }

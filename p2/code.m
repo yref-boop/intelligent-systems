@@ -1,4 +1,15 @@
-ann = feedforwardnet([8]);
+
+% ann basics:
+
+ann = feedforwardnet([13]);
+
+inputs	= xlsread('Data.xls', inputs)';
+outputs	= xlsread('Data.xls', outputs)';
+
+ann = train(ann, inputs, outputs);
+
+% params:
+
 ann.divideParam.trainRatio = 0.6;
 ann.divideParam.valRatio = 0.2;
 ann.divideParam.testRatio = 0.2;
@@ -14,7 +25,7 @@ meanError = [];
 stdError = [];
 
 for k=1:50,
-	
+
 	trainError = [];
 	validationError = [];
 	testError = [];
@@ -27,10 +38,9 @@ for k=1:50,
 		validationError(end+1)	= tr.best_vperf;
 		testError(end+1)		= tr.best_tperf;
 	end;
-
 	meanError(end+1) 	= mean(testError);
 	stdError(end+1)		= std(testError);
-	fprintf('%i', k);
+
 end;
 
 % training of double layer anns (from [1 1] to [10 10])
@@ -53,26 +63,13 @@ for j=1:20,
 		end;
 		meanError2(end+1) 	= mean(testError);
 		stdError2(end+1)	= std(testError);
-		fprintf('%i',j);
-		fprintf('%i\n',k);
 	end;
 end;
 
+% show values:
 
+meanError
+stdError
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+meanError2
+stdError2

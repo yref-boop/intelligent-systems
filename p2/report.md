@@ -41,6 +41,34 @@ in this specific example, the standard deviation is also quite low, but std does
 
 ##### results
 
+an example of the training of a ann with one hidden layer of 13 neurons is detailed:
+
+as stated, the training stopping criteria is the default on matlab
+
+the training is completed with the following values:
+- number of epoch:		94		-
+- elapsed time:			6secs	-
+- performance:			4.26	-
+- gradient:				0.231	-
+- mu:					0.01	-
+- validation checks:	6		*
+
+as it is normal, the stopping criterion met is the number of validation check, the progress of the training can be seen in the following image
+ <img src="https://github.com/yref-boop/intelligent-systems/blob/main/p2/results/train_13.png" width= 300>
+in this specific case is worth-noting how the training almost stops at epoch 20, since 1 more validation check would suffice the criterion
+moreover, it is possible to see the evolution of the gradient and mu as the epochs go on
+
+is is appreciable on these graphs that the algorithm starts improving quite fasts, but the trend changes a short time after epoch 10
+this is more easily seen on the performance plot:
+ <img src="https://github.com/yref-boop/intelligent-systems/blob/main/p2/results/performance_13.png" width= 300>
+
+here that trend is easily seen, moreover, it is clear that, while they start sharing the error value, all three subsets (train, validation and test) end up with different values, in that order from lower to higher
+
+also, it is quite nice that validation and error both share really similar error values: even though it does not guarantee it, it shows that when presented with unseen data, the performance of the ann does not suffer too much and that it was able to grasp the model of the data in a correct manner, as shown:
+
+ <img src="https://github.com/yref-boop/intelligent-systems/blob/main/p2/results/regression_13.png" width= 300>
+
+
 
 ### double hidden layer
 #### method

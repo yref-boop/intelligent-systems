@@ -53,13 +53,16 @@ the training is completed with the following values:
 - mu:					0.01	-
 - validation checks:	6		*
 
-as it is normal, the stopping criterion met is the number of validation check, the progress of the training can be seen in the following image
+as it is seems to be normal on this problem, the stopping criterion met is the number of validation check, the progress of the training can be seen in the following image
+
  <img src="https://github.com/yref-boop/intelligent-systems/blob/main/p2/results/train_13.png" width= 300>
+
 in this specific case is worth-noting how the training almost stops at epoch 20, since 1 more validation check would suffice the criterion
 moreover, it is possible to see the evolution of the gradient and mu as the epochs go on
 
 is is appreciable on these graphs that the algorithm starts improving quite fasts, but the trend changes a short time after epoch 10
 this is more easily seen on the performance plot:
+
  <img src="https://github.com/yref-boop/intelligent-systems/blob/main/p2/results/performance_13.png" width= 300>
 
 here that trend is easily seen, moreover, it is clear that, while they start sharing the error value, all three subsets (train, validation and test) end up with different values, in that order from lower to higher
@@ -117,7 +120,38 @@ this function also follows both the patterns defined on the previous mean error
 with this information it is clear that any configuration where any of the two layers has a number equal or lower to 3 does not suffice, neither the accuracy (mean) or reliability (standard deviation), moreover, an architecture whose values are closest to the best but with a lower number of neurons is the one to be selected
 the architecture [9,11] seems to satisfy those conditions
 
+
 ##### results
+
+an example of the training of a ann with one hidden layer of 13 neurons is detailed:
+
+as stated, the training stopping criteria is the default on matlab
+
+the training is completed with the following values:
+- number of epoch:		78		-
+- elapsed time:			3secs	-
+- performance:			2.11	-
+- gradient:				2.41	-
+- mu:					0.01	-
+- validation checks:	6		*
+
+as it is normal, the stopping criterion met is the number of validation check, the progress of the training can be seen in the following image
+
+ <img src="https://github.com/yref-boop/intelligent-systems/blob/main/p2/results/train911.png" width= 300>
+
+moreover, it is possible to see the evolution of the gradient and mu as the epochs go on
+
+is is appreciable on these graphs that the algorithm starts improving quite fast, but the trend changes a short time after epoch 10
+this is more easily seen on the performance plot:
+
+ <img src="https://github.com/yref-boop/intelligent-systems/blob/main/p2/results/performance911.png" width= 300>
+
+here that trend is easily seen, moreover, it is clear that, while they start sharing the error value, all three subsets (train, validation and test) end up with different values, in that order from lower to higher
+
+also, in this case validation and error, while having somewhat similar error values, are less similar than on the previous case
+
+ <img src="https://github.com/yref-boop/intelligent-systems/blob/main/p2/results/regression911.png" width= 300>
+
 
 ### conclusion
 

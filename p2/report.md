@@ -154,6 +154,12 @@ also, in this case validation and error, while having somewhat similar error val
 
 
 ### conclusion
+when comparing both architectures, the second one seems to be more capable of reducing the error
+this was to be expected, since the total number of neurons, and thus connections is higher
+
+moreover, the time needed for both was the opposite of what was expeected, with the architecture with 2 hidden layers being trained faster (but this is likely only due to luck, since the number of epochs is also lower in this specific case)
+
+an interesting comparison to be made is that in which both neural networks have exactly the same number of neurons, only their distribution changes
 
 #### extra regards:
 - on most, if not all cases, the stopping criteria met was the number of validation checks
